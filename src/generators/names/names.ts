@@ -1,0 +1,31 @@
+export const FIRST_NAMES = [
+  "Alex", "Sam", "Jordan", "Taylor", "Casey", "Morgan", "Riley", "Jamie",
+  "Drew", "Avery", "Quinn", "Sage", "Rowan", "Skyler", "Eden", "Hayden",
+  "Jane", "John", "Mary", "James", "Emma", "Liam", "Olivia", "Noah",
+  "Ava", "Ethan", "Sophia", "Mason", "Isabella", "Lucas", "Mia", "Aiden",
+  "Charlotte", "Logan", "Amelia", "Caleb", "Harper", "Daniel", "Evelyn", "Henry",
+  "Abigail", "Owen", "Emily", "Sebastian", "Elizabeth", "Jack", "Sofia", "Levi",
+  "Aria", "Wyatt", "Scarlett", "Julian", "Victoria", "Gabriel", "Madison", "Anthony",
+  "Luna", "Isaac", "Grace", "Grayson", "Chloe", "Lincoln", "Penelope", "Joseph",
+  "Layla", "Andrew", "Riley", "Mateo", "Zoey", "Theodore", "Nora", "Elias",
+  "Lily", "Carter", "Eleanor", "Aurelia", "Diego", "Hannah", "Kai", "Stella",
+  "Yusuf", "Aaliyah", "Arjun", "Nia", "Priya", "Oscar", "Maya", "Felix",
+  "Ines", "Mateo", "Anya", "Rafael", "Sana", "Theo", "Zara", "Ezra",
+  "Iris", "Hugo", "Lila", "Soren",
+];
+
+export const LAST_NAMES = [
+  "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis",
+  "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson",
+  "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson",
+  "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson",
+  "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen",
+  "Hill", "Flores", "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera",
+  "Campbell", "Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans",
+  "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart",
+  "Morris", "Morales", "Murphy", "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan",
+  "Cooper", "Peterson", "Bailey", "Reed", "Kelly", "Howard", "Ramos", "Kim",
+  "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez", "Wood", "James",
+  "Bennett", "Gray", "Mendoza", "Ruiz", "Hughes", "Price", "Alvarez", "Castillo",
+  "Sanders", "Patel", "Myers", "Long", "Ross", "Foster", "Jimenez", "Powell",
+];

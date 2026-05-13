@@ -1,0 +1,84 @@
+{
+  "nouns": [
+    "morning", "evening", "summer", "winter", "spring", "autumn", "river", "ocean", "mountain", "valley",
+    "garden", "forest", "meadow", "village", "city", "harbor", "bridge", "tower", "castle", "cottage",
+    "library", "market", "museum", "theater", "studio", "kitchen", "balcony", "terrace", "stairway", "doorway",
+    "window", "fireplace", "carpet", "lantern", "candle", "mirror", "painting", "sculpture", "letter", "journal",
+    "notebook", "envelope", "postcard", "calendar", "compass", "telescope", "camera", "violin", "piano", "guitar",
+    "melody", "rhythm", "harmony", "concert", "symphony", "ballad", "poem", "story", "novel", "chapter",
+    "passage", "sentence", "phrase", "language", "voice", "whisper", "echo", "shadow", "reflection", "memory",
+    "dream", "vision", "idea", "thought", "moment", "instant", "season", "decade", "century", "tradition",
+    "festival", "ceremony", "celebration", "journey", "passage", "adventure", "discovery", "secret", "mystery", "puzzle",
+    "question", "answer", "lesson", "wisdom", "patience", "kindness", "courage", "friendship", "loyalty", "gratitude",
+    "garden", "flower", "blossom", "petal", "branch", "leaf", "root", "trunk", "orchard", "vineyard",
+    "harvest", "wheat", "barley", "orchard", "rose", "lily", "daisy", "violet", "sunflower", "tulip",
+    "bird", "sparrow", "robin", "swallow", "heron", "owl", "eagle", "deer", "rabbit", "fox",
+    "wolf", "bear", "horse", "cattle", "sheep", "fish", "trout", "salmon", "butterfly", "beetle",
+    "stone", "pebble", "boulder", "cavern", "tunnel", "ravine", "cliff", "hillside", "summit", "ridge",
+    "trail", "path", "lane", "road", "highway", "avenue", "alley", "courtyard", "fountain", "statue"
+  ],
+  "verbsPast": [
+    "discovered", "revealed", "transformed", "embraced", "abandoned", "approached", "considered", "explored", "imagined", "remembered",
+    "forgot", "noticed", "observed", "examined", "studied", "investigated", "questioned", "answered", "explained", "described",
+    "mentioned", "suggested", "proposed", "offered", "presented", "delivered", "carried", "lifted", "raised", "lowered",
+    "opened", "closed", "entered", "departed", "arrived", "returned", "traveled", "wandered", "lingered", "rested",
+    "listened", "watched", "witnessed", "encountered", "greeted", "welcomed", "invited", "joined", "followed", "guided",
+    "led", "taught", "learned", "practiced", "performed", "completed", "finished", "started", "began", "continued",
+    "crossed", "passed", "climbed", "descended", "rose", "fell", "drifted", "floated", "settled", "gathered",
+    "collected", "scattered", "produced", "created", "designed", "crafted", "built", "shaped", "carved", "painted",
+    "wrote", "composed", "recited", "sang", "played", "danced", "celebrated", "praised", "admired", "appreciated",
+    "preserved", "protected", "defended", "guarded", "sheltered", "supported", "encouraged", "comforted", "consoled", "soothed",
+    "shared", "exchanged", "borrowed", "lent", "earned", "deserved", "obtained", "acquired", "received", "accepted",
+    "trusted", "believed", "doubted", "wondered", "hoped", "wished", "longed", "yearned", "promised", "vowed",
+    "agreed", "decided", "resolved", "concluded", "determined", "planned", "arranged", "organized", "prepared", "introduced",
+    "demonstrated", "illustrated", "indicated", "signaled", "announced", "declared", "expressed", "communicated", "responded", "replied",
+    "spoke", "talked", "laughed", "smiled", "wept", "cried", "shouted", "whispered", "murmured", "sighed"
+  ],
+  "adjectives": [
+    "quiet", "gentle", "warm", "cool", "bright", "dim", "soft", "smooth", "rough", "sharp",
+    "ancient", "modern", "fresh", "weary", "eager", "patient", "curious", "thoughtful", "graceful", "elegant",
+    "humble", "proud", "noble", "generous", "honest", "loyal", "brave", "bold", "calm", "serene",
+    "vivid", "vibrant", "subtle", "muted", "delicate", "sturdy", "fragile", "robust", "slender", "stout",
+    "narrow", "broad", "tall", "short", "deep", "shallow", "vast", "tiny", "enormous", "modest",
+    "golden", "silver", "crimson", "azure", "emerald", "amber", "violet", "ivory", "scarlet", "ochre",
+    "frosty", "balmy", "humid", "arid", "misty", "stormy", "tranquil", "stormy", "radiant", "luminous",
+    "shadowy", "hazy", "crisp", "mellow", "rustic", "polished", "weathered", "pristine", "wild", "tame",
+    "playful", "solemn", "joyful", "mournful", "wistful", "merry", "earnest", "sincere", "candid", "reserved",
+    "clever", "wise", "naive", "skilled", "talented", "creative", "inventive", "practical", "diligent", "industrious",
+    "fragrant", "savory", "sweet", "bitter", "tart", "tender", "crunchy", "creamy", "silky", "velvety",
+    "distant", "nearby", "remote", "familiar", "unknown", "hidden", "obvious", "evident", "apparent", "mysterious",
+    "spirited", "lively", "weary", "restless", "peaceful", "harmonious", "discordant", "abrupt", "smooth", "steady",
+    "rare", "common", "unique", "ordinary", "remarkable", "splendid", "magnificent", "ordinary", "humble", "lavish"
+  ],
+  "adverbs": [
+    "quietly", "gently", "carefully", "thoughtfully", "patiently", "eagerly", "swiftly", "slowly", "gracefully", "boldly",
+    "calmly", "softly", "loudly", "brightly", "dimly", "sharply", "smoothly", "fiercely", "tenderly", "warmly",
+    "coolly", "happily", "merrily", "sadly", "solemnly", "earnestly", "honestly", "humbly", "proudly", "modestly",
+    "suddenly", "gradually", "instantly", "eventually", "finally", "barely", "hardly", "scarcely", "almost", "nearly",
+    "deeply", "lightly", "firmly", "loosely", "tightly", "freely", "openly", "secretly", "quietly", "obviously",
+    "often", "rarely", "sometimes", "occasionally", "frequently", "always", "never", "usually", "seldom", "regularly",
+    "everywhere", "nowhere", "somewhere", "elsewhere", "outside", "indoors", "upstairs", "downstairs", "nearby", "afar",
+    "perhaps", "certainly", "surely", "definitely", "possibly", "probably", "evidently", "apparently", "presumably", "supposedly",
+    "kindly", "politely", "rudely", "warmly", "coldly", "cheerfully", "sorrowfully", "anxiously", "confidently", "nervously",
+    "skillfully", "clumsily", "deftly", "awkwardly", "elegantly", "neatly", "sloppily", "precisely", "vaguely", "clearly"
+  ],
+  "prepositions": [
+    "in", "on", "under", "over", "above", "below", "beside", "behind", "near", "beyond",
+    "across", "through", "along", "around", "between", "among", "against", "toward", "without", "within",
+    "before", "after", "during", "until", "throughout", "amid", "atop", "beneath", "alongside", "outside"
+  ],
+  "determiners": [
+    "the", "a", "an", "this", "that", "every", "each", "some", "any", "another"
+  ],
+  "determinersPlural": [
+    "the", "these", "those", "many", "several", "few", "some", "any", "all", "most"
+  ],
+  "conjunctions": [
+    "and", "but", "yet", "while", "although", "because", "since", "as", "when", "where",
+    "though", "whereas", "so", "for", "if"
+  ],
+  "openers": [
+    "Then", "Later", "Meanwhile", "Eventually", "Soon", "Often", "Sometimes", "Indeed", "Suddenly", "Curiously",
+    "Quietly", "Naturally", "Surely", "Perhaps", "Certainly"
+  ]
+}
