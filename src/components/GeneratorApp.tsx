@@ -1,13 +1,11 @@
 "use client";
 
 import { useMemo, useReducer } from "react";
-import { Sparkles } from "lucide-react";
 import { ActionButtons } from "./ActionButtons";
 import { HistoryPanel } from "./HistoryPanel";
 import { OutputDisplay } from "./OutputDisplay";
 import { SettingsPanel, type SettingsState } from "./SettingsPanel";
 import { StatsPanel } from "./StatsPanel";
-import { ThemeToggle } from "./ThemeToggle";
 import { DEFAULT_GENERATOR_ID, getGenerator } from "@/generators/registry";
 import { getPresets, medianPreset } from "@/generators/defaults";
 import type {
@@ -29,6 +27,7 @@ interface State {
 type Action =
   | { type: "updateSettings"; payload: Partial<SettingsState> }
   | { type: "switchGenerator"; payload: { id: string } }
+  | { type: "resetSettings" }
   | { type: "setOutput"; payload: string }
   | { type: "restore"; payload: { settings: Partial<SettingsState>; text: string } }
   | { type: "clear" };
@@ -46,6 +45,24 @@ function defaultsForGenerator(gen: TextGenerator | undefined): {
   const presets = getPresets(gen?.presets, unit);
   const count = medianPreset(presets);
   return { custom, unit, count };
+}
+
+function settingsAtDefaults(settings: SettingsState): boolean {
+  const gen = getGenerator(settings.generatorId);
+  const d = defaultsForGenerator(gen);
+  if (settings.unit !== d.unit) return false;
+  if (settings.count !== d.count) return false;
+  if (settings.caseMode !== "original") return false;
+  if (settings.htmlWrap !== false) return false;
+  if (settings.lineBreak !== "double") return false;
+  const keys = new Set([
+    ...Object.keys(d.custom),
+    ...Object.keys(settings.custom),
+  ]);
+  for (const k of keys) {
+    if (settings.custom[k] !== d.custom[k]) return false;
+  }
+  return true;
 }
 
 function buildInitial(): State {
@@ -89,6 +106,22 @@ function reducer(state: State, action: Action): State {
         },
       };
     }
+    case "resetSettings": {
+      const gen = getGenerator(state.settings.generatorId);
+      const d = defaultsForGenerator(gen);
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          unit: d.unit,
+          count: d.count,
+          caseMode: "original",
+          htmlWrap: false,
+          lineBreak: "double",
+          custom: d.custom,
+        },
+      };
+    }
     case "setOutput":
       return { ...state, rawOutput: action.payload };
     case "restore":
@@ -116,6 +149,7 @@ export function GeneratorApp() {
   }, [rawOutput, settings.lineBreak, settings.caseMode, settings.htmlWrap]);
 
   const stats = useMemo(() => computeStats(displayedText), [displayedText]);
+  const atDefaults = useMemo(() => settingsAtDefaults(settings), [settings]);
 
   const handleSettingsChange = (p: Partial<SettingsState>) => {
     if (p.generatorId && p.generatorId !== settings.generatorId) {
@@ -162,55 +196,37 @@ export function GeneratorApp() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground">
-      <header className="sticky top-0 z-10 backdrop-blur bg-background/85 border-b border-border-base">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-12 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-md bg-accent text-accent-foreground flex items-center justify-center">
-              <Sparkles className="h-3.5 w-3.5" strokeWidth={1.75} />
-            </div>
-            <span className="font-display text-[15px] font-semibold tracking-tight">
-              Text Generator
-            </span>
-          </div>
-          <ThemeToggle />
-        </div>
-      </header>
+    <div className="space-y-4 sm:space-y-5">
+      <div>
+        <h1 className="font-display text-2xl sm:text-[28px] font-semibold tracking-tight">
+          Generate placeholder text & mock data
+        </h1>
+        <p className="text-sm text-foreground-muted mt-0.5">
+          Words, sentences, paragraphs, JSON, identifiers, colors — all client-side.
+        </p>
+      </div>
 
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
-        <div>
-          <h1 className="font-display text-2xl sm:text-[28px] font-semibold tracking-tight">
-            Generate placeholder text & mock data
-          </h1>
-          <p className="text-sm text-foreground-muted mt-0.5">
-            Words, sentences, paragraphs, JSON, identifiers, colors — all client-side.
-          </p>
-        </div>
+      <SettingsPanel settings={settings} onChange={handleSettingsChange} />
 
-        <SettingsPanel settings={settings} onChange={handleSettingsChange} />
+      <ActionButtons
+        text={displayedText}
+        hasOutput={!!rawOutput}
+        onGenerate={handleGenerate}
+        onClear={() => dispatch({ type: "clear" })}
+        onReset={() => dispatch({ type: "resetSettings" })}
+        canReset={!atDefaults}
+      />
 
-        <ActionButtons
-          text={displayedText}
-          hasOutput={!!rawOutput}
-          onGenerate={handleGenerate}
-          onClear={() => dispatch({ type: "clear" })}
-        />
+      <StatsPanel stats={stats} />
 
-        <StatsPanel stats={stats} />
+      <OutputDisplay text={displayedText} htmlMode={settings.htmlWrap} />
 
-        <OutputDisplay text={displayedText} htmlMode={settings.htmlWrap} />
-
-        <HistoryPanel
-          entries={history.entries}
-          onRestore={handleRestore}
-          onDelete={history.remove}
-          onClear={history.clear}
-        />
-
-        <footer className="pt-2 text-center text-xs text-foreground-muted">
-          Modern · Extensible · Fully client-side
-        </footer>
-      </main>
+      <HistoryPanel
+        entries={history.entries}
+        onRestore={handleRestore}
+        onDelete={history.remove}
+        onClear={history.clear}
+      />
     </div>
   );
 }

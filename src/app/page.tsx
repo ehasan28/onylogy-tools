@@ -1,5 +1,5 @@
-import { GeneratorApp } from "@/components/GeneratorApp";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <GeneratorApp />;
+  redirect("/copy-generator");
 }

@@ -23,9 +23,12 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Text Generator — Modern Placeholder Text",
+  title: {
+    default: "Onylogy Tools — Copy generator, PX converter, Clamp generator, Case converter",
+    template: "%s · Onylogy Tools",
+  },
   description:
-    "Generate meaningful English placeholder text, mock data, identifiers and more. Live stats, formatting options, copy, download, history.",
+    "A focused set of client-side web-dev tools: copy generator (lorem ipsum, mock data, identifiers), PX↔rem converter, fluid clamp() generator, and text case converter.",
 };
 
 export default function RootLayout({

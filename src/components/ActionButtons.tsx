@@ -1,6 +1,13 @@
 "use client";
 
-import { Check, Copy, Download, RefreshCw, Trash2 } from "lucide-react";
+import {
+  Check,
+  Copy,
+  Download,
+  RefreshCw,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/Button";
 import { downloadAsTextFile } from "@/lib/download";
@@ -9,6 +16,8 @@ interface ActionButtonsProps {
   text: string;
   onGenerate: () => void;
   onClear: () => void;
+  onReset?: () => void;
+  canReset?: boolean;
   hasOutput: boolean;
 }
 
@@ -18,6 +27,8 @@ export function ActionButtons({
   text,
   onGenerate,
   onClear,
+  onReset,
+  canReset = false,
   hasOutput,
 }: ActionButtonsProps) {
   const [copied, setCopied] = useState(false);
@@ -74,17 +85,31 @@ export function ActionButtons({
         <Download {...ICON} />
         Download
       </Button>
-      <Button
-        onClick={onClear}
-        variant="ghost"
-        size="md"
-        disabled={!hasOutput}
-        aria-label="Clear output"
-        className="ml-auto"
-      >
-        <Trash2 {...ICON} />
-        Clear
-      </Button>
+      <div className="ml-auto flex items-center gap-2">
+        {onReset && (
+          <Button
+            onClick={onReset}
+            variant="ghost"
+            size="md"
+            disabled={!canReset}
+            aria-label="Reset settings to defaults"
+            title="Reset settings"
+          >
+            <RotateCcw {...ICON} />
+            Reset
+          </Button>
+        )}
+        <Button
+          onClick={onClear}
+          variant="ghost"
+          size="md"
+          disabled={!hasOutput}
+          aria-label="Clear output"
+        >
+          <Trash2 {...ICON} />
+          Clear
+        </Button>
+      </div>
     </div>
   );
 }

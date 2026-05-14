@@ -74,9 +74,12 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps) {
   const presets = getPresets(generator?.presets, settings.unit);
   const max = MAX_BY_UNIT[settings.unit];
 
+  const hasCustom =
+    generator?.customOptions && generator.customOptions.length > 0;
+
   return (
-    <div className="rounded-xl border border-border-base bg-surface px-3 py-2.5">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+    <div className="rounded-xl border border-border-base bg-surface px-4 py-3 space-y-3">
+      <Row label="Generation">
         <Control label="Generator">
           <Select
             value={settings.generatorId}
@@ -107,7 +110,7 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps) {
           />
         </Control>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           {presets.map((n) => {
             const active = settings.count === n;
             return (
@@ -127,9 +130,11 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps) {
             );
           })}
         </div>
+      </Row>
 
-        <span className="hidden md:block h-6 w-px bg-border-base mx-1" />
+      <Divider />
 
+      <Row label="Formatting">
         <Control label="Case">
           <Select
             value={settings.caseMode}
@@ -157,11 +162,13 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps) {
             ariaLabel="Wrap paragraphs in HTML p tags"
           />
         </Control>
+      </Row>
 
-        {generator?.customOptions && generator.customOptions.length > 0 && (
-          <>
-            <span className="hidden md:block h-6 w-px bg-border-base mx-1" />
-            {generator.customOptions.map((opt) => (
+      {hasCustom && (
+        <>
+          <Divider />
+          <Row label="Options">
+            {generator!.customOptions!.map((opt) => (
               <CustomControl
                 key={opt.key}
                 opt={opt}
@@ -171,11 +178,34 @@ export function SettingsPanel({ settings, onChange }: SettingsPanelProps) {
                 }
               />
             ))}
-          </>
-        )}
+          </Row>
+        </>
+      )}
+    </div>
+  );
+}
+
+function Row({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5">
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 w-20 shrink-0">
+        {label}
+      </span>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 flex-1">
+        {children}
       </div>
     </div>
   );
+}
+
+function Divider() {
+  return <hr className="border-border-base/70" />;
 }
 
 function Control({
