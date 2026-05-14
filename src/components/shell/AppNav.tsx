@@ -54,7 +54,7 @@ export function AppNav() {
 
         <nav
           aria-label="Tools"
-          className="flex-1 min-w-0 -mx-2 overflow-x-auto scrollbar-thin"
+          className="flex-1 min-w-0 -mx-2 overflow-x-auto scrollbar-thin flex justify-center"
         >
           <ul ref={navRef} className="flex items-center gap-1 px-2 min-w-max">
             {TOOLS.map((tool) => {

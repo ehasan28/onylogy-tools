@@ -8,11 +8,20 @@ export default function ToolsLayout({
   return (
     <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
       <AppNav />
-      <main className="flex-1 mx-auto w-full max-w-6xl px-4 sm:px-6 py-5 sm:py-7">
-        {children}
+      <main className="flex-1 mx-auto w-full max-w-6xl px-4 sm:px-6 py-5 sm:py-7 flex flex-col">
+        <div className="my-auto w-full">{children}</div>
       </main>
       <footer className="pb-6 text-center text-xs text-foreground-muted">
-        Onylogy Tools · Modern · Fully client-side
+        Built by{" "}
+        <a
+          href="https://onylogy.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-foreground hover:text-accent underline underline-offset-2 transition-colors"
+        >
+          Onylogy
+        </a>{" "}
+        · Fully client-side
       </footer>
     </div>
   );
