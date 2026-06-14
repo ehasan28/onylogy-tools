@@ -53,6 +53,7 @@ function reducer(s: State, a: Action): State {
 export function PxConverterTool() {
   const [state, dispatch] = useReducer(reducer, initial);
   const [copied, setCopied] = useState<"px" | "rem" | null>(null);
+  const [swapped, setSwapped] = useState(false);
 
   const handleCopy = async (which: "px" | "rem") => {
     const value =
@@ -66,48 +67,64 @@ export function PxConverterTool() {
     } catch {}
   };
 
+  const pxCard = (
+    <UnitCard
+      label="Pixels"
+      unit="px"
+      value={state.px}
+      onChange={(v) => dispatch({ type: "setPx", value: v })}
+      onCopy={() => handleCopy("px")}
+      copied={copied === "px"}
+      inputAriaLabel="Pixel value"
+      highlight={!swapped}
+    />
+  );
+
+  const remCard = (
+    <UnitCard
+      label="REM"
+      unit="rem"
+      value={Number(formatNumber(state.rem))}
+      onChange={(v) => dispatch({ type: "setRem", value: v })}
+      onCopy={() => handleCopy("rem")}
+      copied={copied === "rem"}
+      inputAriaLabel="Rem value"
+      highlight={swapped}
+    />
+  );
+
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <header className="text-center max-w-2xl mx-auto pt-2 sm:pt-4">
-        <h1 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight">
+    <div className="space-y-7 sm:space-y-9">
+      <header className="text-center max-w-2xl mx-auto">
+        <h1 className="font-display text-[26px] sm:text-[32px] font-semibold tracking-tight">
           PX to REM converter
         </h1>
-        <p className="text-sm text-foreground-muted mt-1">
+        <p className="text-sm text-foreground-muted mt-2">
           Convert pixels to the CSS rem unit and back. The conversion works in both directions —
-          edit either value.
+          edit either value, or swap which side leads.
         </p>
       </header>
 
-      <div className="mx-auto w-full max-w-3xl">
-        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 sm:gap-4">
-          <UnitCard
-            label="Pixels"
-            unit="px"
-            value={state.px}
-            onChange={(v) => dispatch({ type: "setPx", value: v })}
-            onCopy={() => handleCopy("px")}
-            copied={copied === "px"}
-            inputAriaLabel="Pixel value"
-          />
-          <div className="hidden sm:flex justify-center text-foreground-muted">
-            <ArrowLeftRight className="h-5 w-5" strokeWidth={1.5} />
+      <div className="mx-auto w-full max-w-2xl">
+        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-3 sm:gap-4">
+          {swapped ? remCard : pxCard}
+
+          <div className="flex justify-center pb-3.5">
+            <button
+              type="button"
+              onClick={() => setSwapped((v) => !v)}
+              aria-label="Swap sides"
+              title="Swap sides"
+              className="h-9 w-9 rounded-full border border-border-base bg-surface text-foreground-muted shadow-card flex items-center justify-center cursor-pointer hover:text-accent hover:border-border-strong active:scale-95 transition-all"
+            >
+              <ArrowLeftRight className="h-4 w-4 rotate-90 sm:rotate-0" strokeWidth={1.75} />
+            </button>
           </div>
-          <div className="sm:hidden flex justify-center text-foreground-muted py-1">
-            <ArrowLeftRight className="h-4 w-4" strokeWidth={1.5} />
-          </div>
-          <UnitCard
-            label="REM"
-            unit="rem"
-            value={Number(formatNumber(state.rem))}
-            onChange={(v) => dispatch({ type: "setRem", value: v })}
-            onCopy={() => handleCopy("rem")}
-            copied={copied === "rem"}
-            inputAriaLabel="Rem value"
-            highlight
-          />
+
+          {swapped ? pxCard : remCard}
         </div>
 
-        <p className="text-center text-sm text-foreground-muted mt-5">
+        <p className="text-center text-sm text-foreground-muted mt-6">
           Calculation based on a root font-size of{" "}
           <BaseEditor
             value={state.basePx}
@@ -117,9 +134,9 @@ export function PxConverterTool() {
         </p>
       </div>
 
-      <div className="mx-auto w-full max-w-3xl">
-        <div className="rounded-xl border border-border-base bg-surface p-4 sm:p-5">
-          <div className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 mb-2">
+      <div className="mx-auto w-full max-w-2xl">
+        <div className="rounded-2xl border border-border-base bg-surface shadow-card p-4 sm:p-5">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground-muted/80 mb-3">
             Presets (px)
           </div>
           <PresetChips
@@ -158,15 +175,20 @@ function UnitCard({
 }: UnitCardProps) {
   return (
     <div className="space-y-2">
-      <div className="text-center text-sm font-medium text-foreground-muted">
+      <div className="text-center text-xs font-semibold uppercase tracking-[0.12em] text-foreground-muted">
         {label}
       </div>
-      <div className="rounded-xl border border-border-base bg-surface px-3 py-4 sm:py-5 flex items-center gap-2">
+      <div
+        className={clsx(
+          "rounded-2xl border bg-surface shadow-card px-3 py-5 sm:py-6 flex items-center gap-2 transition-colors",
+          highlight ? "border-accent/40" : "border-border-base",
+        )}
+      >
         <button
           type="button"
           onClick={onCopy}
           aria-label={copied ? "Copied" : `Copy ${label} value`}
-          className="shrink-0 h-8 w-8 rounded-md text-foreground-muted hover:text-foreground hover:bg-surface-muted flex items-center justify-center cursor-pointer transition-colors"
+          className="shrink-0 h-8 w-8 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-muted flex items-center justify-center cursor-pointer transition-colors"
         >
           {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
         </button>
@@ -181,7 +203,7 @@ function UnitCard({
           aria-label={inputAriaLabel}
           className={clsx(
             "flex-1 min-w-0 bg-transparent text-center font-display tabular-nums",
-            "text-3xl sm:text-4xl font-light",
+            "text-3xl sm:text-4xl font-medium",
             "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
             "focus:outline-none",
             highlight && "text-accent",

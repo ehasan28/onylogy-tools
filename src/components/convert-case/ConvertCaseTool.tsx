@@ -35,17 +35,17 @@ export function ConvertCaseTool() {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-5">
-      <div>
-        <h1 className="font-display text-2xl sm:text-[28px] font-semibold tracking-tight">
+    <div className="mx-auto w-full max-w-2xl space-y-5 sm:space-y-6">
+      <header className="text-center max-w-2xl mx-auto">
+        <h1 className="font-display text-[26px] sm:text-[32px] font-semibold tracking-tight">
           Convert Case
         </h1>
-        <p className="text-sm text-foreground-muted mt-0.5">
+        <p className="text-sm text-foreground-muted mt-2">
           Paste any text and transform it between UPPERCASE, lowercase, Title Case, and more.
         </p>
-      </div>
+      </header>
 
-      <div className="rounded-xl border border-border-base bg-surface">
+      <div className="rounded-2xl border border-border-base bg-surface shadow-card">
         <label
           htmlFor="convertcase-input"
           className="block text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 px-4 pt-3"
@@ -109,7 +109,7 @@ export function ConvertCaseTool() {
 
       <div
         aria-label="Text statistics"
-        className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2 rounded-xl border border-border-base bg-surface text-xs"
+        className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3.5 py-2.5 rounded-xl border border-border-base bg-surface shadow-card text-xs"
       >
         <StatTile label="Words" value={stats.words} />
         <Dot />
@@ -118,7 +118,7 @@ export function ConvertCaseTool() {
         <StatTile label="No spaces" value={stats.charsNoSpaces} />
       </div>
 
-      <div className="rounded-xl border border-border-base bg-surface">
+      <div className="rounded-2xl border border-border-base bg-surface shadow-card">
         <label
           htmlFor="convertcase-output"
           className="block text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 px-4 pt-3"

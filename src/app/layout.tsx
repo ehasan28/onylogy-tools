@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Montserrat, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { themeBootstrapScript } from "@/lib/theme";
 import "./globals.css";
 
-const heading = Bricolage_Grotesque({
+const heading = Space_Grotesk({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const body = Montserrat({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
 const mono = JetBrains_Mono({

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useReducer, useState } from "react";
+import clsx from "clsx";
 import { Check, Copy } from "lucide-react";
 import { UnitNumberInput } from "./UnitNumberInput";
 import {
@@ -29,8 +30,8 @@ type FieldKey = "minViewport" | "maxViewport" | "minFont" | "maxFont";
 type Action = { type: "setField"; key: FieldKey; value: UnitValue };
 
 const initial: State = {
-  minViewport: { value: 500, unit: "px" },
-  maxViewport: { value: 900, unit: "px" },
+  minViewport: { value: 420, unit: "px" },
+  maxViewport: { value: 1200, unit: "px" },
   minFont: { value: 16, unit: "px" },
   maxFont: { value: 48, unit: "px" },
 };
@@ -65,19 +66,22 @@ export function ClampGeneratorTool() {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(clamp.css);
+      // Copy the clean clamp() value only (no `font-size:` prefix) —
+      // drops straight into Elementor / WordPress fields. Preview keeps the
+      // full declaration for readability.
+      await navigator.clipboard.writeText(clamp.value);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {}
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <header className="text-center max-w-2xl mx-auto pt-2 sm:pt-4">
-        <h1 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight">
+    <div className="space-y-7 sm:space-y-9">
+      <header className="text-center max-w-2xl mx-auto">
+        <h1 className="font-display text-[26px] sm:text-[32px] font-semibold tracking-tight">
           Font-size Clamp Generator
         </h1>
-        <p className="text-sm text-foreground-muted mt-1">
+        <p className="text-sm text-foreground-muted mt-2">
           Generate a fluid <span className="font-mono">font-size</span> that scales linearly with{" "}
           <span className="font-mono">clamp()</span>.
         </p>
@@ -86,7 +90,7 @@ export function ClampGeneratorTool() {
       <div className="mx-auto w-full max-w-2xl space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {FIELDS.map((f) => (
-            <label key={f.key} className="space-y-1.5">
+            <label key={f.key} className="space-y-2">
               <span className="block text-sm font-medium">{f.label}</span>
               <UnitNumberInput
                 value={state[f.key].value}
@@ -102,19 +106,35 @@ export function ClampGeneratorTool() {
           ))}
         </div>
 
-        <div className="rounded-lg border border-border-base bg-surface-muted px-4 py-3 flex items-center gap-3">
-          <code className="flex-1 min-w-0 font-mono text-sm break-all whitespace-pre-wrap">
+        <div className="rounded-2xl border border-border-base bg-surface shadow-card p-4 sm:p-5">
+          <div className="flex items-center justify-between gap-3 mb-2.5">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground-muted/80">
+              Generated CSS
+            </span>
+            <button
+              type="button"
+              onClick={handleCopy}
+              aria-label={copied ? "Copied" : "Copy clamp() value"}
+              className={clsx(
+                "shrink-0 inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-xs font-medium cursor-pointer transition-colors",
+                copied
+                  ? "text-accent"
+                  : "text-foreground-muted hover:text-foreground hover:bg-surface-muted",
+              )}
+              title={copied ? "Copied!" : "Copy clean clamp() value"}
+            >
+              {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
+              {copied ? "Copied" : "Copy"}
+            </button>
+          </div>
+          <code className="block font-mono text-sm sm:text-[15px] break-all whitespace-pre-wrap text-foreground">
             {clamp.css}
           </code>
-          <button
-            type="button"
-            onClick={handleCopy}
-            aria-label={copied ? "Copied" : "Copy CSS"}
-            className="shrink-0 h-9 w-9 rounded-md text-foreground-muted hover:text-foreground hover:bg-surface flex items-center justify-center cursor-pointer transition-colors"
-            title={copied ? "Copied!" : "Copy"}
-          >
-            {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
-          </button>
+          <p className="mt-2.5 text-xs text-foreground-muted">
+            Copy gives the clean <span className="font-mono">clamp()</span> value (no{" "}
+            <span className="font-mono">font-size:</span> prefix) — drops straight into Elementor or
+            any CSS field.
+          </p>
         </div>
 
         {clamp.degenerate && (

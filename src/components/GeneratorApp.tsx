@@ -196,15 +196,15 @@ export function GeneratorApp() {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-5">
-      <div>
-        <h1 className="font-display text-2xl sm:text-[28px] font-semibold tracking-tight">
+    <div className="space-y-5 sm:space-y-6">
+      <header className="text-center max-w-2xl mx-auto">
+        <h1 className="font-display text-[26px] sm:text-[32px] font-semibold tracking-tight">
           Generate placeholder text & mock data
         </h1>
-        <p className="text-sm text-foreground-muted mt-0.5">
+        <p className="text-sm text-foreground-muted mt-2">
           Words, sentences, paragraphs, JSON, identifiers, colors — all client-side.
         </p>
-      </div>
+      </header>
 
       <SettingsPanel settings={settings} onChange={handleSettingsChange} />
 
