@@ -13,7 +13,7 @@ const SAMPLE = "Hello World — convert this text to any case";
 
 export function ConvertCaseTool() {
   const [input, setInput] = useState("");
-  const [mode, setMode] = useState<CaseModeId>("upper");
+  const [mode, setMode] = useState<CaseModeId>("sentence");
   const [copied, setCopied] = useState(false);
 
   const output = useMemo(() => applyCaseMode(input, mode), [input, mode]);
@@ -127,7 +127,7 @@ export function ConvertCaseTool() {
           </Button>
           <Button
             onClick={() => setInput("")}
-            variant="ghost"
+            variant="secondary"
             size="md"
             disabled={!input}
             aria-label="Clear input"

@@ -3,8 +3,7 @@ export type CaseModeId =
   | "lower"
   | "title"
   | "sentence"
-  | "constant"
-  | "alternating";
+  | "constant";
 
 export interface CaseModeInfo {
   id: CaseModeId;
@@ -12,12 +11,11 @@ export interface CaseModeInfo {
 }
 
 export const CASE_MODES: CaseModeInfo[] = [
+  { id: "sentence", label: "Sentence case" },
+  { id: "title", label: "Title Case" },
   { id: "upper", label: "UPPERCASE" },
   { id: "lower", label: "lowercase" },
-  { id: "title", label: "Title Case" },
-  { id: "sentence", label: "Sentence case" },
   { id: "constant", label: "CONSTANT_CASE" },
-  { id: "alternating", label: "aLtErNaTiNg" },
 ];
 
 /**
@@ -112,6 +110,5 @@ export function applyCaseMode(input: string, mode: CaseModeId): string {
     case "title": return toTitle(input);
     case "sentence": return toSentence(input);
     case "constant": return toConstant(input);
-    case "alternating": return toAlternating(input);
   }
 }
