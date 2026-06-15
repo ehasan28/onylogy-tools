@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from "react";
 import clsx from "clsx";
-import { Check, Copy, Trash2 } from "lucide-react";
+import { Check, Copy, Download, Share2, Trash2 } from "lucide-react";
 import { applyCaseMode, CASE_MODES, type CaseModeId } from "@/lib/case";
+import { downloadAsTextFile } from "@/lib/download";
 import { Button } from "../ui/Button";
 
-const ICON = { className: "h-4 w-4", strokeWidth: 1.5 } as const;
+const ICON = { className: "h-3.5 w-3.5", strokeWidth: 1.75 } as const;
 
 const SAMPLE = "Hello World — convert this text to any case";
 
@@ -20,51 +21,134 @@ export function ConvertCaseTool() {
   const stats = useMemo(() => {
     const trimmed = input.trim();
     const words = trimmed ? trimmed.split(/\s+/).filter(Boolean).length : 0;
-    const chars = input.length;
-    const charsNoSpaces = input.replace(/\s+/g, "").length;
-    return { words, chars, charsNoSpaces };
+    const characters = input.length;
+    const sentences = input
+      .split(/[.!?]+/)
+      .filter((s) => s.trim().length > 0).length;
+    const lines = input.length ? input.split(/\r\n|\r|\n/).length : 0;
+    return { characters, words, sentences, lines };
   }, [input]);
+
+  const flash = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   const handleCopy = async () => {
     if (!output) return;
     try {
       await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      flash();
     } catch {}
   };
 
+  const handleShare = async () => {
+    if (!output) return;
+    const url = typeof window !== "undefined" ? window.location.href : undefined;
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title: "Onylogy — Convert Case", text: output, url });
+      } else {
+        await navigator.clipboard.writeText(output);
+        flash();
+      }
+    } catch {}
+  };
+
+  const handleDownload = () => {
+    if (!output) return;
+    downloadAsTextFile(output, "converted-text.txt");
+  };
+
   return (
-    <div className="space-y-5 sm:space-y-6">
+    <div className="space-y-4 sm:space-y-5">
       <header className="text-center max-w-2xl mx-auto">
         <h1 className="font-display text-[26px] sm:text-[32px] font-semibold tracking-tight">
           Convert Case
         </h1>
         <p className="text-sm text-foreground-muted mt-2">
-          Paste any text and transform it between UPPERCASE, lowercase, Title Case, and more.
+          Paste any text, pick a case, then copy, share, or download the result.
         </p>
       </header>
 
+      <div className="rounded-2xl border border-border-base bg-surface shadow-card p-2.5 sm:p-3 space-y-2.5">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <Button
+            onClick={handleCopy}
+            variant="secondary"
+            size="sm"
+            disabled={!output}
+            aria-label="Copy output"
+          >
+            {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
+            {copied ? "Copied" : "Copy"}
+          </Button>
+          <Button
+            onClick={handleShare}
+            variant="secondary"
+            size="sm"
+            disabled={!output}
+            aria-label="Share output"
+          >
+            <Share2 {...ICON} />
+            Share
+          </Button>
+          <Button
+            onClick={handleDownload}
+            variant="secondary"
+            size="sm"
+            disabled={!output}
+            aria-label="Download output as a text file"
+          >
+            <Download {...ICON} />
+            Download
+          </Button>
+          <Button
+            onClick={() => setInput("")}
+            variant="ghost"
+            size="sm"
+            disabled={!input}
+            aria-label="Clear input"
+            className="ml-auto"
+          >
+            <Trash2 {...ICON} />
+            Clear
+          </Button>
+        </div>
+
+        <div className="h-px bg-border-base/70" />
+
+        <div className="flex flex-wrap gap-2">
+          {CASE_MODES.map((m) => {
+            const active = m.id === mode;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => setMode(m.id)}
+                className={clsx(
+                  "h-8 px-3 rounded-lg text-[13px] font-medium transition-colors cursor-pointer border",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  active
+                    ? "bg-accent text-accent-foreground border-accent"
+                    : "bg-surface text-foreground-muted border-border-base hover:text-foreground hover:border-border-strong",
+                )}
+              >
+                {m.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         <div className="rounded-2xl border border-border-base bg-surface shadow-card flex flex-col">
-          <div className="flex items-center justify-between gap-2 px-4 pt-3">
-            <label
-              htmlFor="convertcase-input"
-              className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80"
-            >
-              Input
-            </label>
-            <span
-              aria-label="Text statistics"
-              className="flex items-center gap-1.5 text-[11px] text-foreground-muted tabular-nums"
-            >
-              <Stat label="words" value={stats.words} />
-              <Dot />
-              <Stat label="chars" value={stats.chars} />
-              <Dot />
-              <Stat label="no spaces" value={stats.charsNoSpaces} />
-            </span>
-          </div>
+          <label
+            htmlFor="convertcase-input"
+            className="block text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 px-4 pt-3"
+          >
+            Input
+          </label>
           <textarea
             id="convertcase-input"
             value={input}
@@ -95,48 +179,17 @@ export function ConvertCaseTool() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        {CASE_MODES.map((m) => {
-          const active = m.id === mode;
-          return (
-            <button
-              key={m.id}
-              type="button"
-              onClick={() => setMode(m.id)}
-              className={clsx(
-                "h-9 px-3 rounded-lg text-sm font-medium transition-colors cursor-pointer border",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                active
-                  ? "bg-accent text-accent-foreground border-accent"
-                  : "bg-surface text-foreground-muted border-border-base hover:text-foreground hover:border-border-strong",
-              )}
-            >
-              {m.label}
-            </button>
-          );
-        })}
-        <div className="ml-auto flex items-center gap-2">
-          <Button
-            onClick={handleCopy}
-            variant="secondary"
-            size="md"
-            disabled={!output}
-            aria-label="Copy output"
-          >
-            {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
-            {copied ? "Copied!" : "Copy"}
-          </Button>
-          <Button
-            onClick={() => setInput("")}
-            variant="ghost"
-            size="md"
-            disabled={!input}
-            aria-label="Clear input"
-          >
-            <Trash2 {...ICON} />
-            Clear
-          </Button>
-        </div>
+      <div
+        aria-label="Text statistics"
+        className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 px-4 py-2.5 rounded-xl border border-border-base bg-surface shadow-card text-xs"
+      >
+        <Stat label="Characters" value={stats.characters} />
+        <Dot />
+        <Stat label="Words" value={stats.words} />
+        <Dot />
+        <Stat label="Sentences" value={stats.sentences} />
+        <Dot />
+        <Stat label="Lines" value={stats.lines} />
       </div>
     </div>
   );
@@ -144,12 +197,19 @@ export function ConvertCaseTool() {
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <span>
-      <span className="font-semibold text-foreground">{value.toLocaleString()}</span> {label}
+    <span className="flex items-center gap-1.5">
+      <span className="uppercase tracking-wider text-[10px] text-foreground-muted">
+        {label}
+      </span>
+      <span className="font-semibold tabular-nums">{value.toLocaleString()}</span>
     </span>
   );
 }
 
 function Dot() {
-  return <span aria-hidden className="text-foreground-muted/40">·</span>;
+  return (
+    <span aria-hidden className="text-foreground-muted/40">
+      ·
+    </span>
+  );
 }
