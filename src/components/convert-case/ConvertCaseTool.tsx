@@ -45,22 +45,54 @@ export function ConvertCaseTool() {
         </p>
       </header>
 
-      <div className="rounded-2xl border border-border-base bg-surface shadow-card">
-        <label
-          htmlFor="convertcase-input"
-          className="block text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 px-4 pt-3"
-        >
-          Input
-        </label>
-        <textarea
-          id="convertcase-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={SAMPLE}
-          rows={6}
-          spellCheck={false}
-          className="w-full bg-transparent px-4 pb-4 pt-1 text-[15px] leading-relaxed resize-y outline-none font-mono"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+        <div className="rounded-2xl border border-border-base bg-surface shadow-card flex flex-col">
+          <div className="flex items-center justify-between gap-2 px-4 pt-3">
+            <label
+              htmlFor="convertcase-input"
+              className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80"
+            >
+              Input
+            </label>
+            <span
+              aria-label="Text statistics"
+              className="flex items-center gap-1.5 text-[11px] text-foreground-muted tabular-nums"
+            >
+              <Stat label="words" value={stats.words} />
+              <Dot />
+              <Stat label="chars" value={stats.chars} />
+              <Dot />
+              <Stat label="no spaces" value={stats.charsNoSpaces} />
+            </span>
+          </div>
+          <textarea
+            id="convertcase-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={SAMPLE}
+            rows={11}
+            spellCheck={false}
+            className="flex-1 w-full bg-transparent px-4 pb-4 pt-2 text-[15px] leading-relaxed resize-none outline-none font-mono"
+          />
+        </div>
+
+        <div className="rounded-2xl border border-border-base bg-surface shadow-card flex flex-col">
+          <label
+            htmlFor="convertcase-output"
+            className="block text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 px-4 pt-3"
+          >
+            Output
+          </label>
+          <textarea
+            id="convertcase-output"
+            value={output}
+            readOnly
+            rows={11}
+            spellCheck={false}
+            className="flex-1 w-full bg-transparent px-4 pb-4 pt-2 text-[15px] leading-relaxed resize-none outline-none font-mono"
+            placeholder="Transformed text will appear here…"
+          />
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
@@ -106,49 +138,15 @@ export function ConvertCaseTool() {
           </Button>
         </div>
       </div>
-
-      <div
-        aria-label="Text statistics"
-        className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3.5 py-2.5 rounded-xl border border-border-base bg-surface shadow-card text-xs"
-      >
-        <StatTile label="Words" value={stats.words} />
-        <Dot />
-        <StatTile label="Chars" value={stats.chars} />
-        <Dot />
-        <StatTile label="No spaces" value={stats.charsNoSpaces} />
-      </div>
-
-      <div className="rounded-2xl border border-border-base bg-surface shadow-card">
-        <label
-          htmlFor="convertcase-output"
-          className="block text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 px-4 pt-3"
-        >
-          Output
-        </label>
-        <textarea
-          id="convertcase-output"
-          value={output}
-          readOnly
-          rows={6}
-          spellCheck={false}
-          className="w-full bg-transparent px-4 pb-4 pt-1 text-[15px] leading-relaxed resize-y outline-none font-mono"
-          placeholder="Transformed text will appear here…"
-        />
-      </div>
     </div>
   );
 }
 
-function StatTile({ label, value }: { label: string; value: number }) {
+function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="flex items-center gap-1.5">
-      <span className="text-foreground-muted uppercase tracking-wider text-[10px]">
-        {label}
-      </span>
-      <span className="font-semibold tabular-nums">
-        {value.toLocaleString()}
-      </span>
-    </div>
+    <span>
+      <span className="font-semibold text-foreground">{value.toLocaleString()}</span> {label}
+    </span>
   );
 }
 
