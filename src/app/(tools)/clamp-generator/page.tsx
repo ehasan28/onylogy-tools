@@ -4,7 +4,7 @@ import { ClampGeneratorTool } from "@/components/clamp-generator/ClampGeneratorT
 export const metadata: Metadata = {
   title: "CSS Clamp Generator — Fluid Font Size Calculator",
   description:
-    "Generate a responsive CSS clamp() value for fluid typography that scales smoothly between two viewport widths. Set min/max font sizes and copy a clean clamp() — ready for Elementor, WordPress, or any stylesheet.",
+    "Build a responsive CSS clamp() for fluid typography between two viewport widths. Copy a clean clamp() value — ready for Elementor, WordPress, or any stylesheet.",
 };
 
 export default function ClampGeneratorPage() {

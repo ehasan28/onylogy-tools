@@ -31,7 +31,7 @@ const TOOLS: ToolCard[] = [
   {
     href: "/convert-case",
     name: "Convert Case",
-    desc: "Switch text between camelCase, snake_case, Title Case, CONSTANT_CASE and 6 more.",
+    desc: "Switch text between Sentence case, Title Case, UPPERCASE, lowercase and CONSTANT_CASE.",
     Icon: CaseSensitive,
   },
 ];

@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s · Onylogy Tools",
   },
   description:
-    "Free, fast, client-side tools for developers and designers: a placeholder copy generator, a PX-to-REM converter, a fluid CSS clamp() generator, and a text case converter. No sign-up — nothing ever leaves your browser.",
+    "Free, client-side tools for developers and designers: copy generator, PX-to-REM converter, CSS clamp() generator, and text case converter. No sign-up needed.",
   applicationName: "Onylogy Tools",
   authors: [{ name: "Onylogy", url: "https://onylogy.com" }],
   creator: "Onylogy",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     "fluid typography calculator",
     "clamp() calculator",
     "case converter",
-    "camelCase converter",
+    "text case converter",
     "developer tools",
     "web design tools",
   ],

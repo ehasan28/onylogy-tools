@@ -59,7 +59,7 @@ Generate a fluid `font-size` that scales linearly between two viewport widths us
 
 ### 🅓 Convert Case — `/convert-case`
 
-Paste any text and convert it between **10 cases**: UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and aLtErNaTiNg. Includes live word/character counts and one-click copy.
+Paste any text and switch it between **5 cases** — Sentence case, Title Case, UPPERCASE, lowercase, and CONSTANT_CASE — then **copy, share, or download** the result. Live character, word, sentence, and line counts included.
 
 ---
 
